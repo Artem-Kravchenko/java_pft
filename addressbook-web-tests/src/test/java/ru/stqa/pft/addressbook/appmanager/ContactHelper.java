@@ -33,4 +33,24 @@ public class ContactHelper {
   public BaseHepler getBaseHepler() {
     return baseHepler;
   }
+
+  public void initContactModification() {
+    baseHepler.wd.findElement(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img")).click();
+  }
+
+  public void submitContactModification() {
+    baseHepler.wd.findElement(By.xpath("//div[@id='content']/form[1]/input[22]")).click();
+  }
+
+  public void selectContact() {
+    baseHepler.wd.findElement(By.id("24")).click();
+   }
+
+  public void deleteContact() {
+    baseHepler.wd.findElement(By.xpath("//div[@id='content']/form[2]/div[2]/input")).click();
+  }
+
+  public void confirmContactDeletion() {
+    baseHepler.wd.switchTo().alert().accept();
+  }
 }
