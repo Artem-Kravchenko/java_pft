@@ -28,11 +28,4 @@ public class GroupHelper {
     return baseHepler;
   }
 
-  public void initGroupModification() {
-    baseHepler.wd.findElement(By.name("edit")).click();
-  }
-
-  public void submitGroupModification() {
-    baseHepler.wd.findElement(By.name("update")).click();
-  }
 }
