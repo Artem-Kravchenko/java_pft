@@ -1,37 +1,35 @@
 package ru.stqa.pft.addressbook.appmanager;
 
+import net.bytebuddy.implementation.bind.annotation.Super;
 import org.openqa.selenium.By;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.stqa.pft.addressbook.model.ContactData;
 
-public class ContactHelper {
+public class ContactHelper extends BaseHepler{
 
-  private BaseHepler baseHepler;
-
-  public ContactHelper(FirefoxDriver wd) {
-      baseHepler = new BaseHepler(wd);
+  public ContactHelper(FirefoxDriver wd){
+    super(wd);
   }
 
-  public void fillContactForm(ContactData contactData) {
-    baseHepler.wd.findElement(By.name("firstname")).click();
-    baseHepler.wd.findElement(By.name("firstname")).clear();
-    baseHepler.wd.findElement(By.name("firstname")).sendKeys(contactData.getFirstName());
-    baseHepler.wd.findElement(By.name("lastname")).click();
-    baseHepler.wd.findElement(By.name("lastname")).clear();
-    baseHepler.wd.findElement(By.name("lastname")).sendKeys(contactData.getLastName());
-    baseHepler.wd.findElement(By.name("address")).click();
-    baseHepler.wd.findElement(By.name("address")).clear();
-    baseHepler.wd.findElement(By.name("address")).sendKeys(contactData.getAddress());
-    baseHepler.wd.findElement(By.name("mobile")).click();
-    baseHepler.wd.findElement(By.name("mobile")).clear();
-    baseHepler.wd.findElement(By.name("mobile")).sendKeys(contactData.getMobilePhoneNumber());
-    baseHepler.wd.findElement(By.name("email")).click();
-    baseHepler.wd.findElement(By.name("email")).clear();
-    baseHepler.wd.findElement(By.name("email")).sendKeys(contactData.getEmail());
+ public void fillContactForm(ContactData contactData) {
+    wd.findElement(By.name("firstname")).click();
+    wd.findElement(By.name("firstname")).clear();
+    wd.findElement(By.name("firstname")).sendKeys(contactData.getFirstName());
+    wd.findElement(By.name("lastname")).click();
+    wd.findElement(By.name("lastname")).clear();
+    wd.findElement(By.name("lastname")).sendKeys(contactData.getLastName());
+    wd.findElement(By.name("address")).click();
+    wd.findElement(By.name("address")).clear();
+    wd.findElement(By.name("address")).sendKeys(contactData.getAddress());
+    wd.findElement(By.name("mobile")).click();
+    wd.findElement(By.name("mobile")).clear();
+    wd.findElement(By.name("mobile")).sendKeys(contactData.getMobilePhoneNumber());
+    wd.findElement(By.name("email")).click();
+    wd.findElement(By.name("email")).clear();
+    wd.findElement(By.name("email")).sendKeys(contactData.getEmail());
   }
 
-  public BaseHepler getBaseHepler() {
-    return baseHepler;
+    public BaseHepler getBaseHepler() {
+    return getBaseHepler();
   }
-
 }

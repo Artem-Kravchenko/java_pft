@@ -8,7 +8,7 @@ public class BaseHepler {
   FirefoxDriver wd;
 
   public BaseHepler(FirefoxDriver wd) {
-    this.wd=wd;
+    this.wd = wd;
   }
 
   public void returnToHomePage() {
@@ -36,11 +36,11 @@ public class BaseHepler {
   }
 
   public void deleteSelectedGroups() {
-      wd.findElement(By.name("delete")).click();
+    wd.findElement(By.name("delete")).click();
   }
 
   public void selectGroup() {
-      wd.findElement(By.name("selected[]")).click();
+    wd.findElement(By.name("selected[]")).click();
   }
 
   public void initContactModification() {
@@ -53,21 +53,23 @@ public class BaseHepler {
 
   public void selectContact() {
     wd.findElement(By.id("25")).click();
-   }
+  }
 
   public void deleteContact() {
     wd.findElement(By.xpath("//div[@id='content']/form[2]/div[2]/input")).click();
   }
 
-  public void confirmContactDeletion(){
+  public void confirmContactDeletion() {
     wd.switchTo().alert().accept();
   }
 
   public void initGroupModification() {
-   wd.findElement(By.name("edit")).click();
+    wd.findElement(By.name("edit")).click();
   }
 
   public void submitGroupModification() {
     wd.findElement(By.name("update")).click();
   }
+
 }
+

@@ -15,6 +15,7 @@ public class ApplicationManager {
   private NavigationHelper navigationHelper;
   private GroupHelper groupHelper;
 
+
   public static boolean isAlertPresent(FirefoxDriver wd) {
         try {
             wd.switchTo().alert();
