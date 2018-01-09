@@ -52,7 +52,7 @@ public class BaseHepler {
   }
 
   public void selectContact() {
-    wd.findElement(By.id("25")).click();
+    wd.findElement(By.id("27")).click();
   }
 
   public void deleteContact() {

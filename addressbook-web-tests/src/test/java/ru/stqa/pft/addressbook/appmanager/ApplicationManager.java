@@ -40,7 +40,7 @@ public class ApplicationManager {
 
 
   public void stop() {
-    contactHelper.getBaseHepler().wd.quit();
+    contactHelper.wd.quit();
   }
 
   public GroupHelper getGroupHelper() {

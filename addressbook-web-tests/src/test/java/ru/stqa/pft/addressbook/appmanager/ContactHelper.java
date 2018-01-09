@@ -1,6 +1,5 @@
 package ru.stqa.pft.addressbook.appmanager;
 
-import net.bytebuddy.implementation.bind.annotation.Super;
 import org.openqa.selenium.By;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.stqa.pft.addressbook.model.ContactData;
@@ -28,8 +27,4 @@ public class ContactHelper extends BaseHepler{
     wd.findElement(By.name("email")).clear();
     wd.findElement(By.name("email")).sendKeys(contactData.getEmail());
   }
-
-    public BaseHepler getBaseHepler() {
-    return getBaseHepler();
-  }
-}
+ }

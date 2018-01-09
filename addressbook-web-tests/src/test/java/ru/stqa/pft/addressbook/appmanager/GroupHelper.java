@@ -6,7 +6,7 @@ import ru.stqa.pft.addressbook.model.GroupData;
 
 public class GroupHelper extends BaseHepler{
 
- private BaseHepler baseHepler;
+ //private BaseHepler baseHepler;
 
   public GroupHelper(FirefoxDriver wd) {
     super(wd);
@@ -24,8 +24,8 @@ public class GroupHelper extends BaseHepler{
     wd.findElement(By.name("group_footer")).sendKeys(groupData.getFooter());
   }
 
-  public BaseHepler getBaseHepler() {
-    return baseHepler;
-  }
+ // public BaseHepler getBaseHepler() {
+  //  return baseHepler;
+  //}
 
 }
