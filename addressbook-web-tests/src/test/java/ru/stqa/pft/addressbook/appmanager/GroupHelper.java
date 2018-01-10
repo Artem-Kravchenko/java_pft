@@ -6,26 +6,42 @@ import ru.stqa.pft.addressbook.model.GroupData;
 
 public class GroupHelper extends BaseHepler{
 
- //private BaseHepler baseHepler;
-
   public GroupHelper(FirefoxDriver wd) {
     super(wd);
   }
 
   public void fillGroupForm(GroupData groupData) {
-    wd.findElement(By.name("group_name")).click();
-    wd.findElement(By.name("group_name")).clear();
-    wd.findElement(By.name("group_name")).sendKeys(groupData.getName());
-    wd.findElement(By.name("group_header")).click();
-    wd.findElement(By.name("group_header")).clear();
-    wd.findElement(By.name("group_header")).sendKeys(groupData.getHeader());
-    wd.findElement(By.name("group_footer")).click();
-    wd.findElement(By.name("group_footer")).clear();
-    wd.findElement(By.name("group_footer")).sendKeys(groupData.getFooter());
+    type(By.name("group_name"), groupData.getName());
+    type(By.name("group_header"),groupData.getHeader());
+    type(By.name("group_footer"), groupData.getFooter());
   }
 
- // public BaseHepler getBaseHepler() {
-  //  return baseHepler;
-  //}
+  public void returnToGroupPage() {
+    click(By.linkText("group page"));
+  }
+
+  public void submitGroupCreation() {
+    click(By.name("submit"));
+  }
+
+  public void initGroupCreation() {
+    click(By.name("new"));
+  }
+
+  public void deleteSelectedGroups() {
+    click(By.name("delete"));
+  }
+
+  public void selectGroup() {
+    click(By.name("selected[]"));
+  }
+
+  public void initGroupModification() {
+    click(By.name("edit"));
+  }
+
+  public void submitGroupModification() {
+    click(By.name("update"));
+  }
 
 }
