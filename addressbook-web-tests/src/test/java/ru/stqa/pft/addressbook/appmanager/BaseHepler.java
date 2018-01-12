@@ -2,13 +2,13 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.WebDriver;
 
 public class BaseHepler {
 
-  FirefoxDriver wd;
+  WebDriver wd;
 
-  public BaseHepler(FirefoxDriver wd) { //Конструктор для иинициализации драйвера для Firefox
+  public BaseHepler(WebDriver wd) { //Конструктор для иинициализации драйвера для Firefox
     this.wd = wd;
   }
 
