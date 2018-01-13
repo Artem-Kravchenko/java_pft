@@ -45,4 +45,14 @@ public class GroupHelper extends BaseHepler{
     click(By.name("update"));
   }
 
+  public void createGroup(GroupData group) { // Функция для создания новой группы
+    initGroupCreation();
+    fillGroupForm(group);
+    submitGroupCreation();
+    returnToGroupPage();
+  }
+
+  public boolean isThereAgroup() {
+    return isElementPresent(By.name("selected[]"));
+  }
 }

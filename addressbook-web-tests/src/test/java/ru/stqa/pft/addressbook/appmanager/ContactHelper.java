@@ -53,7 +53,7 @@ public class ContactHelper extends BaseHepler {
   }
 
   public void selectContact() {
-    click(By.id("29"));
+    click(By.id("41"));
   }
 
   public void deleteContact() {
@@ -64,4 +64,14 @@ public class ContactHelper extends BaseHepler {
     wd.switchTo().alert().accept();
   }
 
+  public boolean isThereAcontact() {
+    return isElementPresent(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+  }
+
+  public void createContact(ContactData contact) {
+    gotoContactPage();
+    fillContactForm(new ContactData("John", "Smith", "New York City", "89001234567", "email@email.com", "test1"), true);
+    submitContactCreation();
+    returnToHomePage();
+  }
 }
