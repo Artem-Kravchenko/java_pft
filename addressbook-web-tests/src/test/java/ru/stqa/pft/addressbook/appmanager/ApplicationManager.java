@@ -11,25 +11,25 @@ import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
 
-  WebDriver wd;
+  WebDriver wd; //Указываем тип интерфейса
 
   private ContactHelper contactHelper;
   private SessionHelper sessionHelper;
   private NavigationHelper navigationHelper;
   private GroupHelper groupHelper;
-  private String browser;
+  private String browser; //Поле (переменная) browser
 
-  public ApplicationManager(String browser) {
-    this.browser = browser;
+  public ApplicationManager(String browser) { //Конструктор класса ApplicationManager с параметром browser
+    this.browser = browser;                   //(Через этот параметр передаётся конкретный драйвер)
   }
 
 
   public void init() {
-    if (browser == BrowserType.FIREFOX) {                            //Выбор браузера
+    if (browser.equals(BrowserType.FIREFOX)) { //Выбор браузера со сравнением через метод equals
       wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));
-    } else if (browser == BrowserType.CHROME) {
+    } else if (browser.equals(BrowserType.CHROME)) {
       wd = new ChromeDriver();
-    } else if (browser == BrowserType.IE) {
+    } else if (browser.equals(BrowserType.IE)) {
       wd = new InternetExplorerDriver();
     }
 
