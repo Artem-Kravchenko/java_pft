@@ -1,26 +1,39 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 
-public class ContactHelper extends BaseHepler{
+public class ContactHelper extends BaseHepler {
 
-  public ContactHelper(WebDriver wd){
+  public ContactHelper(WebDriver wd) {
     super(wd);
   }
 
   public void returnToHomePage() {
-   click(By.linkText("home"));
+    if (isElementPresent(By.id("maintable"))){
+      return;
+    }
+    click(By.linkText("home"));
   }
 
- public void fillContactForm(ContactData contactData) {
-    type(By.name("firstname"),contactData.getFirstName());
-    type(By.name("lastname"),contactData.getLastName());
+  public void fillContactForm(ContactData contactData, boolean creation) {
+    type(By.name("firstname"), contactData.getFirstName());
+    type(By.name("lastname"), contactData.getLastName());
     type(By.name("address"), contactData.getAddress());
     type(By.name("mobile"), contactData.getMobilePhoneNumber());
-    type(By.name("email"),contactData.getEmail());
+    type(By.name("email"), contactData.getEmail());
+
+    if (creation) {
+      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup()); //Выбор группы, если она есть
+    } else {
+      Assert.assertFalse(isElementPresent(By.name("new_group")));
+    }
+    //Проверка наличия элемента типа ниспадающий список Group на странице создания контакта
   }
 
   public void submitContactCreation() {
