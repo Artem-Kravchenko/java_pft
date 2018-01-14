@@ -21,20 +21,14 @@ public class ContactHelper extends BaseHepler {
     click(By.linkText("home"));
   }
 
-  public void fillContactForm(ContactData contactData, boolean creation) {
+  public void fillContactForm(ContactData contactData) {
     type(By.name("firstname"), contactData.getFirstName());
     type(By.name("lastname"), contactData.getLastName());
     type(By.name("address"), contactData.getAddress());
     type(By.name("mobile"), contactData.getMobilePhoneNumber());
     type(By.name("email"), contactData.getEmail());
-
-    if (creation) {
-      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup()); //Выбор группы, если она есть
-    } else {
-      Assert.assertFalse(isElementPresent(By.name("new_group")));
-    }
-    //Проверка наличия элемента типа ниспадающий список Group на странице создания контакта
   }
+
 
   public void submitContactCreation() {
     click(By.xpath("//div[@id='content']/form/input[21]"));
@@ -53,7 +47,7 @@ public class ContactHelper extends BaseHepler {
   }
 
   public void selectContact() {
-    click(By.id("41"));
+    click(By.name("selected[]"));
   }
 
   public void deleteContact() {
@@ -68,9 +62,10 @@ public class ContactHelper extends BaseHepler {
     return isElementPresent(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
   }
 
+
   public void createContact(ContactData contact) {
     gotoContactPage();
-    fillContactForm(new ContactData("John", "Smith", "New York City", "89001234567", "email@email.com", "test1"), true);
+    fillContactForm(contact);
     submitContactCreation();
     returnToHomePage();
   }
