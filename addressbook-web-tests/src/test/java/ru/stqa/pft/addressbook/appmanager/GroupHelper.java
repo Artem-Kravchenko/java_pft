@@ -2,8 +2,12 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.stqa.pft.addressbook.model.GroupData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GroupHelper extends BaseHepler{
 
@@ -33,9 +37,9 @@ public class GroupHelper extends BaseHepler{
     click(By.name("delete"));
   }
 
-  public void selectGroup() {
-    click(By.name("selected[]"));
-  }
+  public void selectGroup(int index) { //Функция с параметром index для выбора конкретного элемента
+    wd.findElements(By.name("selected[]")).get(index).click(); //Поиск всех элементов на странице и выбор конкретного по index'у
+    }
 
   public void initGroupModification() {
     click(By.name("edit"));
@@ -59,5 +63,16 @@ public class GroupHelper extends BaseHepler{
 
   public int getGroupCount() { //Метод который считает и возвращает количество элементов типа checkbox на странице Groups
     return wd.findElements(By.name("selected[]")).size(); // Поиск всех элементов и подсчёт их количества
+  }
+
+  public List<GroupData> getGroupList() { // Метод для формирования списка всех созданных групп
+    List<GroupData> groups = new ArrayList<GroupData>(); // Создаём класс для ArrayList для работы со списком
+    List<WebElement> elements = wd.findElements(By.cssSelector("span.group")); //Находим все элементы типа "Группа" на странице
+    for (WebElement element :  elements) { //В цикле перебираем все элементы полученного списка
+      String name = element.getText(); //Получаем имя каждой группы
+      GroupData group = new GroupData(name, null, null); //Создаём объекты типа GroupData с прочитанными именами групп
+      groups.add(group); //Добавляем объект (Считанную группу) в список
+    }
+    return groups;
   }
 }
