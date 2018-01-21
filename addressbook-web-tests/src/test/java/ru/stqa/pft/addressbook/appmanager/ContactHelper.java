@@ -3,10 +3,15 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.GroupData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends BaseHepler {
 
@@ -46,8 +51,8 @@ public class ContactHelper extends BaseHepler {
     click(By.xpath("//div[@id='content']/form[1]/input[22]"));
   }
 
-  public void selectContact() {
-    click(By.name("selected[]"));
+  public void selectContact(int index) {
+    wd.findElements(By.name("selected[]")).get(index).click();
   }
 
   public void deleteContact() {
@@ -69,4 +74,16 @@ public class ContactHelper extends BaseHepler {
     submitContactCreation();
     returnToHomePage();
   }
+
+  public List<ContactData> getContactList() {
+    List<ContactData> contacs = new ArrayList<ContactData>(); // Создаём класс для ArrayList для работы со списком
+    List<WebElement> elements = wd.findElements(By.name("entry")); //Находим все элементы типа "Контакты" на странице (По записям)
+    for (WebElement element :  elements) { //В цикле перебираем все элементы полученного списка
+      String name = element.getText(); //Извлекаем имя/значение каждого атрибута
+      ContactData contact = new ContactData(name, name, null, null, null, null); //Создаём объекты типа ContactData с прочитанными атрибутами
+      contacs.add(contact); //Добавляем объект (Каждый считанный контакт) в список
+    }
+    return contacs;
+  }
+
 }
