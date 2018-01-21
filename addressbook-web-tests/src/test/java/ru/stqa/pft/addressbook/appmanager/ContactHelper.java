@@ -79,8 +79,11 @@ public class ContactHelper extends BaseHepler {
     List<ContactData> contacs = new ArrayList<ContactData>(); // Создаём класс для ArrayList для работы со списком
     List<WebElement> elements = wd.findElements(By.name("entry")); //Находим все элементы типа "Контакты" на странице (По записям)
     for (WebElement element :  elements) { //В цикле перебираем все элементы полученного списка
-      String name = element.getText(); //Извлекаем имя/значение каждого атрибута
-      ContactData contact = new ContactData(name, name, null, null, null, null); //Создаём объекты типа ContactData с прочитанными атрибутами
+      String lastname = element.findElement(By.xpath("//div/div[4]/form[2]/table/tbody/tr[2]/td[2]")).getText(); // Считывание фамилии
+      String firstname = element.findElement(By.xpath("//div/div[4]/form[2]/table/tbody/tr[2]/td[3]")).getText(); //Считывание имени
+
+      String id = element.findElement(By.tagName("input")).getAttribute("value"); //Получаем id каждого контакта
+      ContactData contact = new ContactData(id, firstname, lastname, null, null, null, null); //Создаём объекты типа ContactData с прочитанными атрибутами
       contacs.add(contact); //Добавляем объект (Каждый считанный контакт) в список
     }
     return contacs;

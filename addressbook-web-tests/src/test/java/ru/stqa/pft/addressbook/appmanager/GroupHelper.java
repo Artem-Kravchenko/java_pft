@@ -70,7 +70,8 @@ public class GroupHelper extends BaseHepler{
     List<WebElement> elements = wd.findElements(By.cssSelector("span.group")); //Находим все элементы типа "Группа" на странице
     for (WebElement element :  elements) { //В цикле перебираем все элементы полученного списка
       String name = element.getText(); //Получаем имя каждой группы
-      GroupData group = new GroupData(name, null, null); //Создаём объекты типа GroupData с прочитанными именами групп
+      String id = element.findElement(By.tagName("input")).getAttribute("value"); //Получаем id каждой группы
+      GroupData group = new GroupData(id, name, null, null); //Создаём объекты типа GroupData с прочитанными именами групп
       groups.add(group); //Добавляем объект (Считанную группу) в список
     }
     return groups;
