@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ContactModificationTests extends TestBase{
 
-  @Test
+  @Test (enabled = false)
   public void testContactModification (){
     app.getContactHelper().returnToHomePage();
     if (! app.getContactHelper().isThereAcontact()) {
