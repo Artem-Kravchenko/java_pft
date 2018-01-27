@@ -49,18 +49,24 @@ public class GroupHelper extends BaseHepler{
   }
 
 
-  public void createGroup(GroupData group) { // Функция для создания новой группы
+  public void create(GroupData group) { // Функция для создания новой группы
     initGroupCreation();
     fillGroupForm(group);
     submitGroupCreation();
     returnToGroupPage();
   }
 
-  public void modifyGroup(int index, GroupData group) {
+  public void modify(int index, GroupData group) {
     selectGroup(index);
     initGroupModification();
     fillGroupForm(group);
     submitGroupModification();
+    returnToGroupPage();
+  }
+
+  public void delete(int index) {
+    selectGroup(index); //Выбор конкретного элемента списка
+    deleteSelectedGroups();
     returnToGroupPage();
   }
 
@@ -72,7 +78,7 @@ public class GroupHelper extends BaseHepler{
     return wd.findElements(By.name("selected[]")).size(); // Поиск всех элементов и подсчёт их количества
   }
 
-  public List<GroupData> getGroupList() { // Метод для формирования списка всех созданных групп
+  public List<GroupData> list() { // Метод для формирования списка всех созданных групп
     List<GroupData> groups = new ArrayList<GroupData>(); // Создаём класс для ArrayList для работы со списком
     List<WebElement> elements = wd.findElements(By.cssSelector("span.group")); //Находим все элементы типа "Группа" на странице
     for (WebElement element :  elements) { //В цикле перебираем все элементы полученного списка
