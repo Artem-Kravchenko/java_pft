@@ -4,24 +4,23 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 
 public class GroupCreationTests extends TestBase {
 
   @Test
     public void testGroupCreation() {
     app.goTo().groupPage();
-    List<GroupData> before = app.group().list();
+    Set<GroupData> before = app.group().all();
     GroupData group = new GroupData().withName("test11");
     app.group().create(group);
-    List<GroupData> after = app.group().list();
+    Set<GroupData> after = app.group().all();
     Assert.assertEquals(after.size(), before.size() + 1);
 
+    //mapToInt - преобразует поток объектов в поток чисел
+    //getAsInt - преобразует найденное число в целое число
+    group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()); //поиск группы с максимальным идентификатором
     before.add(group);
-    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId()); //Сравнение двух групп по идентификаторам
-    before.sort(byId);
-    after.sort(byId);
     Assert.assertEquals(before, after);
   }
 
