@@ -84,8 +84,7 @@ public class GroupHelper extends BaseHepler{
     for (WebElement element :  elements) { //В цикле перебираем все элементы полученного списка
       String name = element.getText(); //Получаем имя каждой группы
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value")); //Получаем id каждой группы
-      GroupData group = new GroupData(id, name, null, null); //Создаём объекты типа GroupData с прочитанными именами групп
-      groups.add(group); //Добавляем объект (Считанную группу) в список
+      groups.add(new GroupData().withId(id).withName(name)); //Добавляем объект (Считанную группу) в список
     }
     return groups;
   }
