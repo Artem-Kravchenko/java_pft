@@ -68,13 +68,20 @@ public class ContactHelper extends BaseHepler {
     return isElementPresent(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
   }
 
-
   public void createContact(ContactData contact) {
     gotoContactPage();
     fillContactForm(contact);
     submitContactCreation();
     returnToHomePage();
   }
+
+  public void modifyContact(int index, ContactData contact) {
+    initContactModification(index);
+    fillContactForm(contact);
+    submitContactModification();
+    returnToHomePage();
+  }
+
 
   public List<ContactData> getContactList() {
     List<ContactData> contacs = new ArrayList<ContactData>(); // Создаём класс для ArrayList для работы со списком
