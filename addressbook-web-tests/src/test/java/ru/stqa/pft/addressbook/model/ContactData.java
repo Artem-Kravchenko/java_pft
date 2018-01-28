@@ -3,37 +3,15 @@ package ru.stqa.pft.addressbook.model;
 import java.util.Objects;
 
 public class ContactData {
-  private int id;
-  private final String firstName;
-  private final String lastName;
-  private final String address;
-  private final String mobilePhoneNumber;
-  private final String email;
+  private int id = Integer.MAX_VALUE;
+  private String firstName;
+  private String lastName;
+  private String address;
+  private String mobilePhoneNumber;
+  private String email;
   private String group;
 
-  public ContactData(String FirstName, String LastName, String Address, String mobilePhoneNumber, String email, String group) {
-    this.id = Integer.MAX_VALUE;
-    this.firstName = FirstName;
-    this.lastName = LastName;
-    this.address = Address;
-    this.mobilePhoneNumber = mobilePhoneNumber;
-    this.email = email;
-    this.group = group;
-  }
-
-  public int getId() {
-    return id;
-  }
-
-  public ContactData(int id, String FirstName, String LastName, String Address, String mobilePhoneNumber, String email, String group) {
-    this.id = id;
-    this.firstName = FirstName;
-    this.lastName = LastName;
-    this.address = Address;
-    this.mobilePhoneNumber = mobilePhoneNumber;
-    this.email = email;
-    this.group = group;
-  }
+  public int getId() {  return id;  }
 
   public String getFirstName() {
     return firstName;
@@ -68,14 +46,45 @@ public class ContactData {
             Objects.equals(lastName, that.lastName);
   }
 
+  public ContactData withId(int id) {
+    this.id = id;
+    return this;
+  }
+
+  public ContactData withFirstName(String firstName) {
+    this.firstName = firstName;
+    return this;
+  }
+
+  public ContactData withLastName(String lastName) {
+    this.lastName = lastName;
+    return this;
+  }
+
+  public ContactData withAddress(String address) {
+    this.address = address;
+    return this;
+  }
+
+  public ContactData withMobilePhoneNumber(String mobilePhoneNumber) {
+    this.mobilePhoneNumber = mobilePhoneNumber;
+    return this;
+  }
+
+  public ContactData withEmail(String email) {
+    this.email = email;
+    return this;
+  }
+
+  public ContactData withGroup(String group) {
+    this.group = group;
+    return this;
+  }
+
   @Override
   public int hashCode() {
 
     return Objects.hash(firstName, lastName);
-  }
-
-  public void setId(int id) {
-    this.id = id;
   }
 
   @Override

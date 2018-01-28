@@ -91,10 +91,8 @@ public class ContactHelper extends BaseHepler {
     for (WebElement element :  elements) { //В цикле перебираем все элементы полученного списка
       String lastname = element.findElement(By.xpath(".//td[2]")).getText(); // Считывание фамилии
       String firstname = element.findElement(By.xpath(".//td[3]")).getText(); //Считывание имени
-
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value")); //Получаем id каждого контакта
-      ContactData contact = new ContactData(id, firstname, lastname, null, null, null, null); //Создаём объекты типа ContactData с прочитанными атрибутами
-      contacs.add(contact); //Добавляем объект (Каждый считанный контакт) в список
+      contacs.add(new ContactData().withId(id).withFirstName(firstname).withLastName(lastname)); //Добавляем объект (Каждый считанный контакт) в список
     }
     return contacs;
   }
