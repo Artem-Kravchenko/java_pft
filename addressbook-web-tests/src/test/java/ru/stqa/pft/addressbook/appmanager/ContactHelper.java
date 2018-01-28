@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 
 import java.util.HashSet;
 import java.util.List;
@@ -85,8 +86,8 @@ public class ContactHelper extends BaseHepler {
     homePage();
   }
 
-  public Set<ContactData> all() { // Функция для работы с множеством элементов
-    Set<ContactData> contacs = new HashSet<ContactData>(); //Создаём объект для работы с множеством элементов
+  public Contacts all() { // Функция для работы с множеством элементов
+    Contacts contacs = new Contacts(); //Создаём объект для работы с множеством элементов
     List<WebElement> elements = wd.findElements(By.name("entry")); //Находим все элементы типа "Контакты" на странице (По записям)
     for (WebElement element :  elements) { //В цикле перебираем все элементы полученного списка
       String lastname = element.findElement(By.xpath(".//td[2]")).getText(); // Считывание фамилии
