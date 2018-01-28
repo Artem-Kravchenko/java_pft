@@ -5,8 +5,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.model.ContactData;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends BaseHepler {
 
@@ -38,17 +39,17 @@ public class ContactHelper extends BaseHepler {
     click(By.linkText("add new"));
   }
 
-  public void initContactModification(int index) {
-    //wd.findElements(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img")).get(index).click();
-    wd.findElements(By.xpath(".//td[8]/a/img")).get(index).click();
+  public void initContactModificationById(int id) {
+    wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();
   }
 
   public void submitContactModification() {
     click(By.xpath("//div[@id='content']/form[1]/input[22]"));
   }
 
-  public void selectContact(int index) {
-    wd.findElements(By.name("selected[]")).get(index).click();
+
+  public void selectContactById(int id) {
+    wd.findElement(By.cssSelector("input[value='" +id + "']")).click();
   }
 
   public void deleteContact() {
@@ -70,23 +71,22 @@ public class ContactHelper extends BaseHepler {
     homePage();
   }
 
-  public void modify(int index, ContactData contact) {
-    initContactModification(index);
+  public void modify(ContactData contact) {
+    initContactModificationById(contact.getId());
     fillContactForm(contact);
     submitContactModification();
     homePage();
   }
 
-  public void delete(int index) {
-    selectContact(index);
+  public void delete(ContactData contact) {
+    selectContactById(contact.getId());
     deleteContact();
     confirmContactDeletion();
     homePage();
   }
 
-
-  public List<ContactData> list() {
-    List<ContactData> contacs = new ArrayList<ContactData>(); // Создаём класс для ArrayList для работы со списком
+  public Set<ContactData> all() { // Функция для работы с множеством элементов
+    Set<ContactData> contacs = new HashSet<ContactData>(); //Создаём объект для работы с множеством элементов
     List<WebElement> elements = wd.findElements(By.name("entry")); //Находим все элементы типа "Контакты" на странице (По записям)
     for (WebElement element :  elements) { //В цикле перебираем все элементы полученного списка
       String lastname = element.findElement(By.xpath(".//td[2]")).getText(); // Считывание фамилии
