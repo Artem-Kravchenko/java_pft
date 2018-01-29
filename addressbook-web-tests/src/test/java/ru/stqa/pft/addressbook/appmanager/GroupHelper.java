@@ -79,7 +79,7 @@ public class GroupHelper extends BaseHepler{
     return isElementPresent(By.name("selected[]"));
   }
 
-  public int getGroupCount() { //Метод который считает и возвращает количество элементов типа checkbox на странице Groups
+  public int count() { //Метод который считает и возвращает количество элементов типа checkbox на странице Groups
     return wd.findElements(By.name("selected[]")).size(); // Поиск всех элементов и подсчёт их количества
   }
 
