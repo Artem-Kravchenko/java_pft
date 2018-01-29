@@ -55,6 +55,7 @@ public class GroupHelper extends BaseHepler{
     initGroupCreation();
     fillGroupForm(group);
     submitGroupCreation();
+    groupCache = null;
     returnToGroupPage();
   }
 
@@ -63,12 +64,14 @@ public class GroupHelper extends BaseHepler{
     initGroupModification();
     fillGroupForm(group);
     submitGroupModification();
+    groupCache = null;
     returnToGroupPage();
   }
 
   public void delete(GroupData group) {
     selectGroupById(group.getId()); //Выбор конкретного элемента множества по id
     deleteSelectedGroups();
+    groupCache = null;
     returnToGroupPage();
   }
 
@@ -80,15 +83,21 @@ public class GroupHelper extends BaseHepler{
     return wd.findElements(By.name("selected[]")).size(); // Поиск всех элементов и подсчёт их количества
   }
 
+  private Groups groupCache = null;
+
+
   public Groups all() { // Метод для формирования множества всех созданных групп
-    Groups groups = new Groups(); // Создаём класс HashSet для работы со множеством
+    if (groupCache != null) {
+      return new Groups(groupCache); //возвращение копии кэша списка всех групп
+    }
+    groupCache = new Groups(); // Создаём класс HashSet для работы со множеством
     List<WebElement> elements = wd.findElements(By.cssSelector("span.group")); //Находим все элементы типа "Группа" на странице
     for (WebElement element :  elements) { //В цикле перебираем все элементы полученного списка
       String name = element.getText(); //Получаем имя каждой группы
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value")); //Получаем id каждой группы
-      groups.add(new GroupData().withId(id).withName(name)); //Добавляем объект (Считанную группу) в множество
+      groupCache.add(new GroupData().withId(id).withName(name)); //Добавляем объект (Считанную группу) в множество
     }
-    return groups;
+    return new Groups(groupCache); //возвращение копии кэша списка всех групп
   }
 
 

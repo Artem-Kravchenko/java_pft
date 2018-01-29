@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.HashSet;
 import java.util.List;
@@ -69,6 +70,7 @@ public class ContactHelper extends BaseHepler {
     gotoContactPage();
     fillContactForm(contact);
     submitContactCreation();
+    contactCache = null;
     homePage();
   }
 
@@ -76,6 +78,7 @@ public class ContactHelper extends BaseHepler {
     initContactModificationById(contact.getId());
     fillContactForm(contact);
     submitContactModification();
+    contactCache = null;
     homePage();
   }
 
@@ -83,19 +86,26 @@ public class ContactHelper extends BaseHepler {
     selectContactById(contact.getId());
     deleteContact();
     confirmContactDeletion();
+    contactCache = null;
     homePage();
   }
 
+  private Contacts contactCache = null;
+
+
   public Contacts all() { // Функция для работы с множеством элементов
-    Contacts contacs = new Contacts(); //Создаём объект для работы с множеством элементов
+    if (contactCache != null){
+      return new Contacts(contactCache); //возвращение копии кэша списка всех групп
+    }
+    contactCache = new Contacts(); //Создаём объект для работы с множеством элементов
     List<WebElement> elements = wd.findElements(By.name("entry")); //Находим все элементы типа "Контакты" на странице (По записям)
     for (WebElement element :  elements) { //В цикле перебираем все элементы полученного списка
       String lastname = element.findElement(By.xpath(".//td[2]")).getText(); // Считывание фамилии
       String firstname = element.findElement(By.xpath(".//td[3]")).getText(); //Считывание имени
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value")); //Получаем id каждого контакта
-      contacs.add(new ContactData().withId(id).withFirstName(firstname).withLastName(lastname)); //Добавляем объект (Каждый считанный контакт) в список
+      contactCache.add(new ContactData().withId(id).withFirstName(firstname).withLastName(lastname)); //Добавляем объект (Каждый считанный контакт) в список
     }
-    return contacs;
+    return new Contacts(contactCache); //возвращение копии кэша списка всех групп
   }
 
 }
