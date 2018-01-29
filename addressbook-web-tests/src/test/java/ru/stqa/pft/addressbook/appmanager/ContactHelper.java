@@ -6,7 +6,9 @@ import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends BaseHepler {
 
@@ -24,10 +26,7 @@ public class ContactHelper extends BaseHepler {
   public void fillContactForm(ContactData contactData) {
     type(By.name("firstname"), contactData.getFirstName());
     type(By.name("lastname"), contactData.getLastName());
-    type(By.name("address"), contactData.getAddress());
-    type(By.name("mobile"), contactData.getMobilePhoneNumber());
-    type(By.name("email"), contactData.getEmail());
-  }
+   }
 
 
   public void submitContactCreation() {
@@ -67,7 +66,6 @@ public class ContactHelper extends BaseHepler {
     gotoContactPage();
     fillContactForm(contact);
     submitContactCreation();
-    contactCache = null;
     homePage();
   }
 
@@ -75,7 +73,6 @@ public class ContactHelper extends BaseHepler {
     initContactModificationById(contact.getId());
     fillContactForm(contact);
     submitContactModification();
-    contactCache = null;
     homePage();
   }
 
@@ -83,26 +80,24 @@ public class ContactHelper extends BaseHepler {
     selectContactById(contact.getId());
     deleteContact();
     confirmContactDeletion();
-    contactCache = null;
     homePage();
   }
 
-  private Contacts contactCache = null;
 
 
   public Contacts all() { // Функция для работы с множеством элементов
-    if (contactCache != null){
-      return new Contacts(contactCache); //возвращение копии кэша списка всех групп
+    Contacts contacts = new Contacts(); //Создаём объект для работы с множеством элементов
+    List<WebElement> rows = wd.findElements(By.name("entry")); //Находим все элементы типа "Контакты" на странице (По записям)
+    for (WebElement row :  rows) { //В цикле перебираем все элементы полученного списка
+      List<WebElement> cells = row.findElements(By.tagName("td"));
+      int id = Integer.parseInt(cells.get(0).findElement(By.tagName("input")).getAttribute("value")); //Получаем id каждого контакта
+      String lastname = cells.get(1).getText(); // Считывание фамилии
+      String firstname = cells.get(2).getText(); //Считывание имени
+      String[] phones = cells.get(5).getText().split("\n"); //Разрезание строки на несколько частей и записыванием результата в переменную phones
+      contacts.add(new ContactData().withId(id).withFirstName(firstname).withLastName(lastname).withHomePhone(phones[0])
+              .withMobilePhone(phones[1]).withWorkPhone(phones[2])); //Добавляем объект (Каждый считанный контакт) в список
     }
-    contactCache = new Contacts(); //Создаём объект для работы с множеством элементов
-    List<WebElement> elements = wd.findElements(By.name("entry")); //Находим все элементы типа "Контакты" на странице (По записям)
-    for (WebElement element :  elements) { //В цикле перебираем все элементы полученного списка
-      String lastname = element.findElement(By.xpath(".//td[2]")).getText(); // Считывание фамилии
-      String firstname = element.findElement(By.xpath(".//td[3]")).getText(); //Считывание имени
-      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value")); //Получаем id каждого контакта
-      contactCache.add(new ContactData().withId(id).withFirstName(firstname).withLastName(lastname)); //Добавляем объект (Каждый считанный контакт) в список
-    }
-    return new Contacts(contactCache); //возвращение копии кэша списка всех групп
+    return contacts; //возвращение копии кэша списка всех групп
   }
 
   public ContactData infoFromEditForm(ContactData contact) {  //Функция считывания данных из формы редактирования контакта

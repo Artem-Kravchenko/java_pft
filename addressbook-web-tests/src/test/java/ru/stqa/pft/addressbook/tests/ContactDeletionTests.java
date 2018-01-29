@@ -15,12 +15,11 @@ public class ContactDeletionTests extends TestBase {
   public void ensurePreconditions() {
     app.contact().homePage();
     if (app.contact().all().size() == 0) {
-      app.contact().create(new ContactData().withFirstName("John").withLastName("Smith")
-              .withAddress("New York City").withMobilePhoneNumber("89001234567").withEmail("email@email.com"));
+      app.contact().create(new ContactData().withFirstName("John").withLastName("Smith"));
     }
   }
 
-  @Test
+  @Test (enabled = false)
   public void testContactDeletion() {
     Contacts before = app.contact().all();
     ContactData deletedContact = before.iterator().next(); //Выбор первого попавшегося элемента множества
