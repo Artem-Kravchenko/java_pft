@@ -93,9 +93,9 @@ public class ContactHelper extends BaseHepler {
       int id = Integer.parseInt(cells.get(0).findElement(By.tagName("input")).getAttribute("value")); //Получаем id каждого контакта
       String lastname = cells.get(1).getText(); // Считывание фамилии
       String firstname = cells.get(2).getText(); //Считывание имени
-      String[] phones = cells.get(5).getText().split("\n"); //Разрезание строки на несколько частей и записыванием результата в переменную phones
-      contacts.add(new ContactData().withId(id).withFirstName(firstname).withLastName(lastname).withHomePhone(phones[0])
-              .withMobilePhone(phones[1]).withWorkPhone(phones[2])); //Добавляем объект (Каждый считанный контакт) в список
+      String allPhones = cells.get(5).getText(); //Разрезание строки на несколько частей и записыванием результата в переменную allPhones
+      contacts.add(new ContactData().withId(id).withFirstName(firstname).withLastName(lastname)
+              .withAllPhones(allPhones)); //Добавляем объект (Каждый считанный контакт) в список
     }
     return contacts; //возвращение копии кэша списка всех групп
   }
