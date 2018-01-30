@@ -94,10 +94,11 @@ public class ContactHelper extends BaseHepler {
       String lastname = cells.get(1).getText(); // Считывание фамилии
       String firstname = cells.get(2).getText(); //Считывание имени
       String allPhones = cells.get(5).getText(); //Разрезание строки на несколько частей и записыванием результата в переменную allPhones
-      contacts.add(new ContactData().withId(id).withFirstName(firstname).withLastName(lastname)
+      String allEmails = cells.get(4).getText();
+      contacts.add(new ContactData().withId(id).withFirstName(firstname).withLastName(lastname).withAllEmails(allEmails)
               .withAllPhones(allPhones)); //Добавляем объект (Каждый считанный контакт) в список
     }
-    return contacts; //возвращение копии кэша списка всех групп
+    return contacts;
   }
 
   public ContactData infoFromEditForm(ContactData contact) {  //Функция считывания данных из формы редактирования контакта
@@ -107,8 +108,13 @@ public class ContactHelper extends BaseHepler {
     String home = wd.findElement(By.name("home")).getAttribute("value");
     String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
     String work = wd.findElement(By.name("work")).getAttribute("value");
+    String email = wd.findElement(By.name("email")).getAttribute("value");
+    String email2 = wd.findElement(By.name("email2")).getAttribute("value");
+    String email3 = wd.findElement(By.name("email3")).getAttribute("value");
     wd.navigate().back();
     return new ContactData().withId(contact.getId())
-            .withFirstName(firstname).withLastName(lastname).withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work);
+            .withFirstName(firstname).withLastName(lastname)
+            .withEmail(email).withEmail2(email2).withEmail3(email3)
+            .withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work);
   }
 }
