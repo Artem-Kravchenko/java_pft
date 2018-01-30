@@ -95,7 +95,10 @@ public class ContactHelper extends BaseHepler {
       String firstname = cells.get(2).getText(); //Считывание имени
       String allPhones = cells.get(5).getText(); //Разрезание строки на несколько частей и записыванием результата в переменную allPhones
       String allEmails = cells.get(4).getText();
-      contacts.add(new ContactData().withId(id).withFirstName(firstname).withLastName(lastname).withAllEmails(allEmails)
+      String addressPrimary = cells.get(3).getText();
+      contacts.add(new ContactData().withId(id).withFirstName(firstname).withLastName(lastname)
+              .withAddressPrimary(addressPrimary)
+              .withAllEmails(allEmails)
               .withAllPhones(allPhones)); //Добавляем объект (Каждый считанный контакт) в список
     }
     return contacts;
@@ -111,10 +114,12 @@ public class ContactHelper extends BaseHepler {
     String email = wd.findElement(By.name("email")).getAttribute("value");
     String email2 = wd.findElement(By.name("email2")).getAttribute("value");
     String email3 = wd.findElement(By.name("email3")).getAttribute("value");
+    String addressPrimary = wd.findElement(By.name("address")).getText();
     wd.navigate().back();
     return new ContactData().withId(contact.getId())
             .withFirstName(firstname).withLastName(lastname)
             .withEmail(email).withEmail2(email2).withEmail3(email3)
+            .withAddressPrimary(addressPrimary)
             .withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work);
   }
 }
