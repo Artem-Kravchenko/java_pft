@@ -20,7 +20,7 @@ public class ContactPhoneTests extends TestBase{
 
     assertThat(contact.getAllPhones(), equalTo(mergePhones(contactInfoFromEditForm)));
     assertThat(contact.getAllEmails(), equalTo(mergeEmails(contactInfoFromEditForm)));
-    assertThat(contact.getAddressPrimary(), equalTo(mergeAdress(contactInfoFromEditForm)));
+    assertThat(contact.getAddressPrimary(), equalTo(mergeAddress(contactInfoFromEditForm)));
   }
 
   private String mergePhones(ContactData contact) { //Фильтрация и склеивание полученных строк (Метод обратных проверок для телефонов)
@@ -31,12 +31,11 @@ public class ContactPhoneTests extends TestBase{
 
   private String mergeEmails(ContactData contact) { //Фильтрация и склеивание полученных строк (Метод обратных проверок для email'ов)
     return Arrays.asList(contact.getEmail(), contact.getEmail2(), contact.getEmail3())
-            .stream().filter((s) -> ! s.equals("")).collect(Collectors.joining("\n"));
+            .stream().filter((s) -> ! s.equals("")).collect(Collectors.joining("\n")); // "\n" - это перенос строки
   }
 
-  private String mergeAdress(ContactData contact) { //Фильтрация и склеивание полученных строк (Метод обратных проверок для адреса)
-    return Arrays.asList(contact.getAddressPrimary())
-            .stream().filter((s) -> ! s.equals("")).collect(Collectors.joining("\n")); // "\n" - это перенос строки
+  private String mergeAddress(ContactData contact) { //Сравнение адресов
+    return Arrays.asList(contact.getAddressPrimary()).stream().collect(Collectors.joining());
   }
 
   public static String cleaned(String phone){ //Функция очистки строки от пробелов и замены некоторых символов на пустые строки
