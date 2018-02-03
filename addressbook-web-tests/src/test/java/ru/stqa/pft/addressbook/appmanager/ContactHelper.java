@@ -6,9 +6,7 @@ import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ContactHelper extends BaseHepler {
 
@@ -16,7 +14,7 @@ public class ContactHelper extends BaseHepler {
     super(wd);
   }
 
-  public void homePage() {
+  public void gotoHomePage() {
     if (isElementPresent(By.id("maintable"))){
       return;
     }
@@ -26,6 +24,7 @@ public class ContactHelper extends BaseHepler {
   public void fillContactForm(ContactData contactData) {
     type(By.name("firstname"), contactData.getFirstName());
     type(By.name("lastname"), contactData.getLastName());
+    attach(By.name("photo"), contactData.getPhoto());
    }
 
 
@@ -66,21 +65,21 @@ public class ContactHelper extends BaseHepler {
     gotoContactPage();
     fillContactForm(contact);
     submitContactCreation();
-    homePage();
+    gotoHomePage();
   }
 
   public void modify(ContactData contact) {
     initContactModificationById(contact.getId());
     fillContactForm(contact);
     submitContactModification();
-    homePage();
+    gotoHomePage();
   }
 
   public void delete(ContactData contact) {
     selectContactById(contact.getId());
     deleteContact();
     confirmContactDeletion();
-    homePage();
+    gotoHomePage();
   }
 
 

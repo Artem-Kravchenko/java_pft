@@ -14,7 +14,7 @@ public class ContactPhoneTests extends TestBase{
 
   @Test
   public void testContactPhone(){
-    app.contact().homePage();
+    app.contact().gotoHomePage();
     ContactData contact = app.contact().all().iterator().next();
     ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
 
@@ -34,7 +34,7 @@ public class ContactPhoneTests extends TestBase{
             .stream().filter((s) -> ! s.equals("")).collect(Collectors.joining("\n")); // "\n" - это перенос строки
   }
 
-  private String mergeAddress(ContactData contact) { //Сравнение адресов
+  private String mergeAddress(ContactData contact) { //Чтение адреса с главной страницы
     return Arrays.asList(contact.getAddressPrimary()).stream().collect(Collectors.joining());
   }
 
