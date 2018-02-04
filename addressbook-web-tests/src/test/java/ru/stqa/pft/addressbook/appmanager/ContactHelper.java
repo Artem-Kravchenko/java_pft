@@ -24,7 +24,7 @@ public class ContactHelper extends BaseHepler {
   public void fillContactForm(ContactData contactData) {
     type(By.name("firstname"), contactData.getFirstName());
     type(By.name("lastname"), contactData.getLastName());
-    attach(By.name("photo"), contactData.getPhoto());
+    type(By.name("address"), contactData.getAddressPrimary());
    }
 
 

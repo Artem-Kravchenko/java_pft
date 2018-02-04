@@ -1,9 +1,14 @@
 package ru.stqa.pft.addressbook.model;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import java.io.File;
 import java.util.Objects;
 
+@XStreamAlias("contact") //Подсказка, которая меняет алиас в тэгах
 public class ContactData {
+  @XStreamOmitField //Аннотация, которая указывает, что поле ниже не нужно сохранять в файл .xml
   private int id;
   private String firstName;
   private String lastName;
@@ -161,9 +166,10 @@ public class ContactData {
   @Override
   public String toString() {
     return "ContactData{" +
-            "id='" + id + '\'' +
+            "id=" + id +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
+            ", addressPrimary='" + addressPrimary + '\'' +
             '}';
   }
 

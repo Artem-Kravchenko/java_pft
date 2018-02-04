@@ -1,0 +1,17 @@
+<list>
+  <contact>
+    <firstName>Johnny 0</firstName>
+    <lastName>Smith 0</lastName>
+    <addressPrimary>Moscow 0</addressPrimary>
+  </contact>
+  <contact>
+    <firstName>Johnny 1</firstName>
+    <lastName>Smith 1</lastName>
+    <addressPrimary>Moscow 1</addressPrimary>
+  </contact>
+  <contact>
+    <firstName>Johnny 2</firstName>
+    <lastName>Smith 2</lastName>
+    <addressPrimary>Moscow 2</addressPrimary>
+  </contact>
+</list>
