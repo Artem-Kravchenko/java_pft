@@ -7,7 +7,8 @@ import ru.stqa.pft.addressbook.appmanager.ApplicationManager;
 
 public class TestBase {
 
-  protected static final ApplicationManager app = new ApplicationManager(BrowserType.FIREFOX); //Делаем переменную app глобальной
+  protected static final ApplicationManager app
+          = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME)); //Делаем переменную app глобальной
   // т.е. доступной всем классам
 
   @BeforeSuite // Запускаем браузер один раз перед всеми нужными тестами
