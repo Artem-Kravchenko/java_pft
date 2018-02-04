@@ -24,31 +24,33 @@ public class ContactCreationTests extends TestBase {
 
   @DataProvider //Провайдер тестовых данных для формата .xml
   public Iterator<Object[]> validContactsFromXml() throws IOException { //Список массивов объектов
-    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.xml"))); //Чтение данных для теста из файла
-    String xml = "";
-    String line = reader.readLine(); // Чтение строки из файла
-    while (line != null) {
-      xml += line;
-      line = reader.readLine();
-    }
-    XStream xStream = new XStream();
-    xStream.processAnnotations(ContactData.class);
-    List<ContactData> contacts = (List<ContactData>) xStream.fromXML(xml);
-    return contacts.stream().map((c) -> new Object[]{c}).collect(Collectors.toList()).iterator();
+   try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.xml")))) { //Чтение данных для теста из файла
+     String xml = "";
+     String line = reader.readLine(); // Чтение строки из файла
+     while (line != null) {
+       xml += line;
+       line = reader.readLine();
+     }
+     XStream xStream = new XStream();
+     xStream.processAnnotations(ContactData.class);
+     List<ContactData> contacts = (List<ContactData>) xStream.fromXML(xml);
+     return contacts.stream().map((c) -> new Object[]{c}).collect(Collectors.toList()).iterator();
+   }
   }
 
   @DataProvider //Провайдер тестовых данных для формата .json
   public Iterator<Object[]> validContactsFromJson() throws IOException { //Список массивов объектов
-    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.json"))); //Чтение данных для теста из файла
-    String json = "";
-    String line = reader.readLine(); // Чтение строки из файла
-    while (line != null) {
-      json += line;
-      line = reader.readLine();
+    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.json")))) { //Чтение данных для теста из файла
+      String json = "";
+      String line = reader.readLine(); // Чтение строки из файла
+      while (line != null) {
+        json += line;
+        line = reader.readLine();
+      }
+      Gson gson = new Gson();
+      List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>(){}.getType());
+      return contacts.stream().map((c) -> new Object[]{c}).collect(Collectors.toList()).iterator();
     }
-    Gson gson = new Gson();
-    List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>(){}.getType());
-    return contacts.stream().map((c) -> new Object[]{c}).collect(Collectors.toList()).iterator();
   }
 
   @Test (dataProvider = "validContactsFromJson")
