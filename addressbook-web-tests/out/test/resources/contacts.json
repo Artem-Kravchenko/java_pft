@@ -1,0 +1,17 @@
+[
+  {
+    "firstName": "Johnny 0",
+    "lastName": "Smith 0",
+    "addressPrimary": "Moscow 0"
+  },
+  {
+    "firstName": "Johnny 1",
+    "lastName": "Smith 1",
+    "addressPrimary": "Moscow 1"
+  },
+  {
+    "firstName": "Johnny 2",
+    "lastName": "Smith 2",
+    "addressPrimary": "Moscow 2"
+  }
+]
