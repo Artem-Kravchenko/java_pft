@@ -12,6 +12,7 @@ dependencies {
     compile 'com.thoughtworks.xstream:xstream:1.4.10' //Библиотека для работы с форматом xml
     compile 'com.google.code.gson:gson:2.8.2' //Библиотека для работы с форматом json
     compile 'ch.qos.logback:logback-classic:1.3.0-alpha2' //Библиотека для работы с лог-файлами
+    compile 'mysql:mysql-connector-java:5.1.45' //Библиотека для работы с базами данных
 }
 
 task testGroups(type: Test) {
