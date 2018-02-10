@@ -3,15 +3,15 @@ package ru.stqa.pft.addressbook.tests;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
-import java.io.*;
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,38 +35,38 @@ public class GroupCreationTests extends TestBase {
       List<GroupData> groups = (List<GroupData>) xStream.fromXML(xml);
       return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
     }
-   }
+  }
 
   @DataProvider //Провайдер тестовых данных для формата .json
   public Iterator<Object[]> validGroupsFromJson() throws IOException { //Список массивов объектов
-   try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/groups.json")))) { //Чтение данных для теста из файла
-     String json = "";
-     String line = reader.readLine(); // Чтение строки из файла
-     while (line != null) {
-       json += line;
-       line = reader.readLine();
-     }
-     Gson gson = new Gson();
-     List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>(){}.getType());
-     return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
-   }
+    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/groups.json")))) { //Чтение данных для теста из файла
+      String json = "";
+      String line = reader.readLine(); // Чтение строки из файла
+      while (line != null) {
+        json += line;
+        line = reader.readLine();
+      }
+      Gson gson = new Gson();
+      List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>() {
+      }.getType());
+      return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
+    }
   }
 
 
   @Test(dataProvider = "validGroupsFromJson")
-      public void testGroupCreation(GroupData group) {
+  public void testGroupCreation(GroupData group) {
+    Groups before = app.db().groups(); //Извлечение списка групп из БД до добавления новой группы
+    app.goTo().groupPage(); //Переходим на страницу групп
+    app.group().create(group); //Создаём группу
+    Groups after = app.db().groups(); //Извлечение списка групп из БД после добавления новой группы
+    assertThat(app.group().count(), equalTo(before.size() + 1)); // count - работает быстрее, чем size при подсчёте элементов в списке (Это есть предварительная более быстрая проверка или хэширование)
+    assertThat(after, equalTo(
+            before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
 
-      app.goTo().groupPage();
-      Groups before = app.group().all();
-      app.group().create(group);
-      assertThat(app.group().count(), equalTo(before.size() + 1)); // count - работает быстрее, чем size при подсчёте элементов в списке (Это есть предварительная более быстрая проверка или хэширование)
-      Groups after = app.group().all();
-      assertThat(after, equalTo(
-              before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+  }
 
-    }
-
-  @Test (enabled = true)
+  @Test(enabled = false)
   public void testGroupBadCreation() {
     app.goTo().groupPage();
     Groups before = app.group().all();
