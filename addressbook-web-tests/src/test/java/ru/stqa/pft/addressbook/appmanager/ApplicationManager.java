@@ -24,6 +24,7 @@ public class ApplicationManager {
   private NavigationHelper navigationHelper;
   private GroupHelper groupHelper;
   private String browser; //Поле (переменная) browser
+  private DbHelper dbHelper;
 
   public ApplicationManager(String browser) { //Конструктор класса ApplicationManager с параметром browser
     this.browser = browser;                   //(Через этот параметр передаётся конкретный драйвер)
@@ -34,6 +35,8 @@ public class ApplicationManager {
   public void init() throws IOException {
     String target = System.getProperty("target", "local");
     properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+
+    dbHelper = new DbHelper(); //Инициализация коннекта к БД
 
     if (browser.equals(BrowserType.FIREFOX)) { //Выбор браузера со сравнением через метод equals
       wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));
@@ -50,6 +53,7 @@ public class ApplicationManager {
     navigationHelper = new NavigationHelper(wd);
     sessionHelper = new SessionHelper(wd);
     sessionHelper.login(properties.getProperty("web.adminLogin"), properties.getProperty("web.adminPassword"));
+
   }
 
 
@@ -68,4 +72,9 @@ public class ApplicationManager {
   public ContactHelper contact() {
     return contactHelper;
   }
+
+  public DbHelper db() {
+    return dbHelper;
+  }
+
 }
