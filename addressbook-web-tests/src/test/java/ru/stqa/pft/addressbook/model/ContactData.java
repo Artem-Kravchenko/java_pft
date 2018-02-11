@@ -3,13 +3,17 @@ package ru.stqa.pft.addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.ManyToAny;
 import org.hibernate.annotations.Type;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.io.File;
+import java.security.acl.Group;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @XStreamAlias("contact") //Подсказка, которая меняет алиас в тэгах
 @Entity
@@ -27,9 +31,6 @@ public class ContactData {
   @Expose
   @Column (name = "lastname")
   private String lastName;
-
-  @Transient
-  private String group;
 
   @Column (name = "home")
   @Type(type = "text")
@@ -64,6 +65,12 @@ public class ContactData {
   @Type(type = "text")
   private String photo;
 
+  @ManyToMany (fetch = FetchType.EAGER)//Декларируем связи между объектами типа группа и контакт (Многие ко многим)
+                                       // fetch - извлечение как можно большего количества информации за одну транзакцию
+  @JoinTable (name = "address_in_groups",
+          joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id")) //Связь между объектами двух типов - контакт (Поле id) и группа (поле groupd_id)
+  private Set<GroupData> groups = new HashSet<GroupData>();
+
   public File getPhoto() {
     return new File(photo);
   }
@@ -81,10 +88,6 @@ public class ContactData {
 
   public String getLastName() {
     return lastName;
-  }
-
-  public String getGroup() {
-    return group;
   }
 
   public String getHomePhone() {
@@ -123,6 +126,19 @@ public class ContactData {
     return addressPrimary;
   }
 
+  public Groups getGroups() {
+    return new Groups(groups);
+  }
+
+  public ContactData inGroup(GroupData group) {
+    groups.add(group);
+    return this;
+  }
+
+  public ContactData outGroup(GroupData group) {
+    groups.add(group);
+    return this;
+  }
 
   public ContactData withId(int id) {
     this.id = id;
@@ -210,5 +226,6 @@ public class ContactData {
 
     return Objects.hash(id, firstName, lastName);
   }
+
 }
 
