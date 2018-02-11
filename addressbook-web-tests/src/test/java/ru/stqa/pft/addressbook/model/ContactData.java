@@ -5,6 +5,8 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import org.hibernate.annotations.Type;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.io.File;
 import java.util.Objects;
@@ -189,10 +191,6 @@ public class ContactData {
             "id=" + id +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
-            ", homePhone='" + homePhone + '\'' +
-            ", mobilePhone='" + mobilePhone + '\'' +
-            ", workPhone='" + workPhone + '\'' +
-            ", addressPrimary='" + addressPrimary + '\'' +
             '}';
   }
 
@@ -203,17 +201,14 @@ public class ContactData {
     ContactData that = (ContactData) o;
     return id == that.id &&
             Objects.equals(firstName, that.firstName) &&
-            Objects.equals(lastName, that.lastName) &&
-            Objects.equals(homePhone, that.homePhone) &&
-            Objects.equals(mobilePhone, that.mobilePhone) &&
-            Objects.equals(workPhone, that.workPhone) &&
-            Objects.equals(addressPrimary, that.addressPrimary);
+            Objects.equals(lastName, that.lastName);
   }
+
 
   @Override
   public int hashCode() {
 
-    return Objects.hash(id, firstName, lastName, homePhone, mobilePhone, workPhone, addressPrimary);
+    return Objects.hash(id, firstName, lastName);
   }
 }
 
