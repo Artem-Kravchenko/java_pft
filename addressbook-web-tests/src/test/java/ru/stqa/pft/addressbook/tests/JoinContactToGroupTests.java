@@ -30,14 +30,14 @@ public class JoinContactToGroupTests extends TestBase {
     boolean completed = false;
     Groups beforeJoiningGroups = null;
     Groups beforeWithAddedGroups = null;
-    Groups existedGroups = app.db().groups(); //Получение списка всех групп
+    Groups existedGroups = app.db().groups(); //Получение списка всех возможных групп
     Contacts contacts = app.db().contacts(); //Получение списка всех контактов
 
-    for(ContactData modifiedContact:contacts) {
-      beforeJoiningGroups = modifiedContact.getGroups();
-      GroupData new_Group = app.contact().GetGroupToJoining(existedGroups, modifiedContact);
-      if (new_Group != null) {
-        app.contact().joining(modifiedContact, new_Group);
+    for(ContactData modifiedContact:contacts) { //Перебираем все контакты
+      beforeJoiningGroups = modifiedContact.getGroups(); //Выбираем список доступных групп для контакта
+      GroupData new_Group = app.contact().GetGroupToJoining(existedGroups, modifiedContact); //Ищем к какой группе можно присоединить контакт
+      if (new_Group != null) { //Если такая группа есть, то присоединяем её к
+        app.contact().joining(modifiedContact, new_Group);  //Присоединение контакта к группе
         contactId = modifiedContact.getId();
         beforeWithAddedGroups = beforeJoiningGroups.withAdded(new_Group);
         completed = true;
