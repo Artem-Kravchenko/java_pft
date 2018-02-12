@@ -104,7 +104,7 @@ public class ContactHelper extends BaseHepler {
     gotoHomePage();
   }
 
-  public void deleteContactFromGroup(ContactData contact, GroupData group) { //Удаление контакта из группы
+  public void removeContactFromGroup(ContactData contact, GroupData group) { //Удаление контакта из группы
     gotoHomePage();
     SelectedGroupById(String.valueOf(group.getId()));
     selectContactById(contact.getId());
@@ -169,4 +169,5 @@ public class ContactHelper extends BaseHepler {
             .withAddressPrimary(addressPrimary)
             .withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work);
   }
-}
+
+ }

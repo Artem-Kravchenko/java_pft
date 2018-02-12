@@ -1,13 +1,14 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.hamcrest.CoreMatchers;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class JoinContactToGroupTests extends TestBase {
   @BeforeMethod
@@ -33,10 +34,10 @@ public class JoinContactToGroupTests extends TestBase {
     Groups existedGroups = app.db().groups(); //Получение списка всех возможных групп
     Contacts contacts = app.db().contacts(); //Получение списка всех контактов
 
-    for(ContactData modifiedContact:contacts) { //Перебираем все контакты
+    for (ContactData modifiedContact : contacts) { //Перебираем все контакты
       beforeJoiningGroups = modifiedContact.getGroups(); //Выбираем список доступных групп для контакта
       GroupData new_Group = app.contact().GetGroupToJoining(existedGroups, modifiedContact); //Ищем к какой группе можно присоединить контакт
-      if (new_Group != null) { //Если такая группа есть, то присоединяем её к
+      if (new_Group != null) { //Если такая группа есть, то присоединяем её к контакту
         app.contact().joining(modifiedContact, new_Group);  //Присоединение контакта к группе
         contactId = modifiedContact.getId();
         beforeWithAddedGroups = beforeJoiningGroups.withAdded(new_Group);
@@ -57,6 +58,7 @@ public class JoinContactToGroupTests extends TestBase {
     }
 
     Groups groupAfter = app.db().contactById(contactId).getGroups();
+    assertThat(groupAfter, equalTo(beforeWithAddedGroups));
   }
 
 }
