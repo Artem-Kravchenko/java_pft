@@ -21,6 +21,7 @@ public class ApplicationManager {
 
   private String browser; //Поле (переменная) browser
   private RegistrationHelper registrationHelper;
+  private FtpHelper ftp; //Поле, которое нужно, чтобы ссылаться на помощник FtpHelper
 
   public ApplicationManager(String browser) { //Конструктор класса ApplicationManager с параметром browser
     this.browser = browser;                   //(Через этот параметр передаётся конкретный драйвер)
@@ -54,6 +55,15 @@ public class ApplicationManager {
     }
     return registrationHelper;
   }
+
+  public FtpHelper ftp() { //Ленивая инициализация помощника FtpHepler (В тот момент, когда он нам будет нужен)
+    if (ftp == null) {
+      ftp = new FtpHelper(this);
+    }
+    return ftp;
+  }
+
+
 
   public WebDriver getDriver() { //Ленивая инициализация веб-драйвера (Чтобы драйвер инициализировался тогда, когда он нам нужен)
     if (wd == null) {
