@@ -13,19 +13,22 @@ import static org.testng.Assert.assertTrue;
 
 public class RegistrationTests extends TestBase{
 
-  @BeforeMethod
+ // @BeforeMethod
   public void startMailServer (){ //Запуск почтового сервера перед тестом
     app.mail().start();
   }
 
   @Test
-  public void testRegistration() throws IOException { //Тест для проверки регистрации нового пользователя
+  public void testRegistration() throws IOException, MessagingException { //Тест для проверки регистрации нового пользователя
     long now = System.currentTimeMillis(); //Возвращение времени в мс от 01.01.1970
     String user = String.format("user%s", now); //Создание нового пользователя с именем + время в мс от 01.01.1970
     String password = "password";
     String email = String.format("user%s@localhost.localdomain", now);
+    app.james().createUser(user, password); //Создание пользователя на почтовом сервере
+
     app.registration().start(user, email);
-    List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
+    // List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
+    List<MailMessage> mailMessages = app.james().waitForMail(user, password, 60000);
     String confirmationLink = findConfirmationLink(mailMessages, email);
     app.registration().finish(confirmationLink, password);
     assertTrue(app.newSession().login(user, password));
@@ -37,7 +40,7 @@ public class RegistrationTests extends TestBase{
     return regex.getText(mailMessage.text);
   }
 
-  @AfterMethod (alwaysRun = true)
+//  @AfterMethod (alwaysRun = true)
   public void stopMailServer (){  //Остановка почтового сервера после теста
     app.mail().stop();
   }
