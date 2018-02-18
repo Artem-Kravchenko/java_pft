@@ -22,6 +22,7 @@ public class ApplicationManager {
   private String browser; //Поле (переменная) browser
   private RegistrationHelper registrationHelper;
   private FtpHelper ftp; //Поле, которое нужно, чтобы ссылаться на помощник FtpHelper
+  private MailHelper mailHelper; //Поле, которое нужно, чтобы ссылаться на помощник MailHelper
 
   public ApplicationManager(String browser) { //Конструктор класса ApplicationManager с параметром browser
     this.browser = browser;                   //(Через этот параметр передаётся конкретный драйвер)
@@ -61,6 +62,13 @@ public class ApplicationManager {
       ftp = new FtpHelper(this);
     }
     return ftp;
+  }
+
+  public MailHelper mail() {
+    if (mailHelper == null) {
+      mailHelper = new MailHelper(this);
+    }
+    return mailHelper;
   }
 
 
