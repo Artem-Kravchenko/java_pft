@@ -11,10 +11,10 @@ import java.util.List;
 
 import static org.testng.Assert.assertTrue;
 
-public class RegistrationTests extends TestBase{
+public class RegistrationTests extends TestBase {
 
- // @BeforeMethod
-  public void startMailServer (){ //Запуск почтового сервера перед тестом
+  // @BeforeMethod
+  public void startMailServer() { //Запуск почтового сервера перед тестом
     app.mail().start();
   }
 
@@ -40,8 +40,8 @@ public class RegistrationTests extends TestBase{
     return regex.getText(mailMessage.text);
   }
 
-//  @AfterMethod (alwaysRun = true)
-  public void stopMailServer (){  //Остановка почтового сервера после теста
+  //  @AfterMethod (alwaysRun = true)
+  public void stopMailServer() {  //Остановка почтового сервера после теста
     app.mail().stop();
   }
 

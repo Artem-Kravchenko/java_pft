@@ -24,18 +24,19 @@ public class ApplicationManager {
   private FtpHelper ftp; //Поле, которое нужно, чтобы ссылаться на помощник FtpHelper
   private MailHelper mailHelper; //Поле, которое нужно, чтобы ссылаться на помощник MailHelper
   private JamesHelper jamesHelper;
+  private ResetPasswordHelper resetPassword;
+  private DbHelper db;
+  private NavigationHelper navigationHelper;
 
   public ApplicationManager(String browser) { //Конструктор класса ApplicationManager с параметром browser
     this.browser = browser;                   //(Через этот параметр передаётся конкретный драйвер)
     properties = new Properties();
   }
 
-
   public void init() throws IOException {
     String target = System.getProperty("target", "local");
     properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
   }
-
 
   public void stop() { //Ленивая остановка драйвера
     if (wd != null) {
@@ -80,7 +81,6 @@ public class ApplicationManager {
   }
 
 
-
   public WebDriver getDriver() { //Ленивая инициализация веб-драйвера (Чтобы драйвер инициализировался тогда, когда он нам нужен)
     if (wd == null) {
       if (browser.equals(BrowserType.FIREFOX)) { //Выбор браузера со сравнением через метод equals
@@ -95,4 +95,27 @@ public class ApplicationManager {
     }
     return wd;
   }
+
+  public ResetPasswordHelper resetPassword() {
+    if(resetPassword==null) {
+      resetPassword = new ResetPasswordHelper(this);
+    }
+    return resetPassword;
+  }
+
+  public DbHelper db(){
+    if (db==null){
+      db= new DbHelper(this);
+    }
+    return db;
+  }
+
+  public NavigationHelper goTo(){
+    if(navigationHelper==null) {
+      navigationHelper = new NavigationHelper(this);
+    }
+    return navigationHelper;
+  }
+
+
 }

@@ -12,6 +12,8 @@ dependencies {
     compile 'commons-net:commons-net:3.6' //Библиотека для работы с FTP-протоколом
     compile 'org.subethamail:subethasmtp:3.1.7' //Библиотека для работы с почтовым сервером
     compile 'ru.lanwen.verbalregex:java-verbal-expressions:1.5' //Библиотека для работы с регулярными выражениями
+    compile 'mysql:mysql-connector-java:5.1.45' //Библиотека для работы с базами данных
+    compile 'org.hibernate:hibernate-core:5.3.0.Beta2' //Библиотека для работы с ORM-представлениями данных, полученных из БД
 
 }
 
