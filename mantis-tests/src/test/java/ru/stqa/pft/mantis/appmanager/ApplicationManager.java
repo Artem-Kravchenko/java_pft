@@ -27,6 +27,7 @@ public class ApplicationManager {
   private ResetPasswordHelper resetPassword;
   private DbHelper db;
   private NavigationHelper navigationHelper;
+  private SoapHelper soapHelper;
 
   public ApplicationManager(String browser) { //Конструктор класса ApplicationManager с параметром browser
     this.browser = browser;                   //(Через этот параметр передаётся конкретный драйвер)
@@ -117,5 +118,11 @@ public class ApplicationManager {
     return navigationHelper;
   }
 
+  public SoapHelper soap(){
+    if(soapHelper==null) {
+      soapHelper = new SoapHelper(this);
+    }
+    return soapHelper;
+  }
 
 }
