@@ -10,6 +10,7 @@ dependencies {
     compile 'org.apache.httpcomponents:httpclient:4.5.5' //Библиотека для работы HTTP-протоколом
     compile 'org.apache.httpcomponents:fluent-hc:4.5.5' //Библиотека для работы с удалённым API по протоколу HTTP
     compile 'com.jayway.restassured:rest-assured:2.9.0' //Библотека для работы с Restassured
+    compile 'com.jayway.jsonpath:json-path:2.2.0' // Библиотека для извлечения данных из строки ответа
 
 
 }
