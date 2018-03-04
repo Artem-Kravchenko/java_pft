@@ -12,6 +12,9 @@ dependencies {
     compile 'com.jayway.restassured:rest-assured:2.9.0' //Библотека для работы с Restassured
     compile 'com.jayway.jsonpath:json-path:2.2.0' // Библиотека для извлечения данных из строки ответа
 
+}
 
+test {
+    useTestNG()
 }
 
